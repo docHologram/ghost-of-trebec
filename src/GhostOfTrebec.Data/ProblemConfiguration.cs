@@ -13,7 +13,7 @@ namespace GhostOfTrebec.Data
     {
         public void Configure(EntityTypeBuilder<Problem> builder)
         {
-            builder.ToTable("Problems", "game");
+            builder.ToTable("Problems");
 
             builder.Property<int>("Id");
             builder.HasKey("Id");
@@ -22,7 +22,7 @@ namespace GhostOfTrebec.Data
 
             builder.OwnsMany(p => p.Answers, answerBuilder =>
             {
-                answerBuilder.ToTable("Answers", "game");
+                answerBuilder.ToTable("Answers");
 
                 answerBuilder.Property<int>("Id");
                 answerBuilder.HasKey("Id");
