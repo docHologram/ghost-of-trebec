@@ -57,7 +57,7 @@ namespace GhostOfTrebec.ConsoleApp
                         answer = Console.ReadLine();
                     } while (answer == null);
 
-                    incorrectAnswers.Append(answer);
+                    incorrectAnswers.Add(answer);
                 }
 
                 var command = new AddQuestionCommand(question, correctAnswer, incorrectAnswers);
