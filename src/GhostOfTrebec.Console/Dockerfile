@@ -36,4 +36,4 @@ RUN dotnet publish src/GhostOfTrebec.Console -c Release -o /app/publish --no-bui
 FROM base as final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ShipmentManagement.Web.dll"]
+ENTRYPOINT ["dotnet", "GhostOfTrebec.Web.dll"]
