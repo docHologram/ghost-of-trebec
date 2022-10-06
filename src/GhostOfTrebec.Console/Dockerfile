@@ -1,13 +1,21 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /app
-EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS source
-COPY . .
+ENV ASPNETCORE_URLS=http://+:8010
 
-# Need to figure out nuget package restore stuff
-ARG NUGET_ACCESSTOKEN
-RUN dotnet nuget update source WhateverMySourceHappensToBe -u "docker" -p "${NUGET_ACCESSTOKEN}" --store-password-in-clear-text --valid-authentication-types "basic"
+EXPOSE 8010
+
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY GhostOfTrebec.Console/*.*.csproj ./GhostOfTrebec.Console/
+COPY GhostOfTrebec.Core/*.*.csproj ./GhostOfTrebec.Core/
+COPY GhostOfTrebec.Data/*.*.csproj ./GhostOfTrebec.Data/
+
+# copy everything else and build app
+COPY GhostOfTrebec.Console/. ./GhostOfTrebec.Console/
+COPY GhostOfTrebec.Core/. ./GhostOfTrebec.Core/
+COPY GhostOfTrebec.Data/. ./GhostOfTrebec.Data/
+
 RUN dotnet restore
 
 FROM restore as build
